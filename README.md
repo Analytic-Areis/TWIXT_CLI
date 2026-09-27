@@ -1,57 +1,61 @@
-# TWIXT GAME PROJECT
+# 🔴🔵 Twixt — Terminal Strategy Board Game (C Edition)
 
-## Student Details
-- Name: Lakshmi Sai Bhargav Vemparala
-- Roll Number: 2025102061
-- Course: M25 C-Programming
-- Date: 3/12/25
+A high-performance, interactive terminal implementation of the classic connection board game **Twixt**, written in pure C. Features dynamic ASCII/ANSI board rendering, knight's-move link generation, planar line-intersection physics to prevent cross-links, and pathfinding-based win condition detection.
 
 ---
 
-## How to Compile and Run
+## 🎮 Game Rules & Overview
 
-1. Place all source files and the Makefile in one folder.
-2. Open a terminal inside that folder.
+Twixt is a two-player abstract strategy connection game:
+* **Players:**
+  * 🟡 **Player 1 (Yellow / O):** Connects the **Top border** to the **Bottom border**.
+  * 🔵 **Player 2 (Blue / X):** Connects the **Left border** to the **Right border**.
+* **Movement:** Players take alternating turns placing pegs on grid coordinates (e.g., `A5`, `C7`).
+* **Links:** When two pegs of the same color are placed a **Knight's Move** apart (2 units along one axis, 1 along the other), a link is automatically forged.
+* **Intersection Rules:** Links cannot cross opponent links (or existing friendly links). Intersecting links are strictly prevented.
+* **Victory:** The first player to form an unbroken chain of connected pegs linking their respective opposite borders wins immediately.
 
-### To Compile:
+---
 
-```
+## ⚡️ Key Features
+
+* **ANSI Color Grid:** Real-time terminal board rendering with distinct colored pegs and links.
+* **Knight-Move Auto-Linking:** Validates geometry and builds bridges between friendly pegs on valid knight jumps.
+* **Planar Line-Intersection Check:** Computational geometry algorithms ensure no two links cross.
+* **Graph Connectivity & Win Check:** Evaluates graph connectivity every turn to detect when a border-to-border bridge is completed.
+* **Safe Exit:** Type `-1` at any prompt to safely forfeit and quit the game.
+
+---
+
+## 🛠️ How to Compile and Run
+
+### Prerequisites
+* GCC or Clang
+* Make
+
+### Build
+```bash
 make
 ```
+This produces the `twixt` executable.
 
-This creates the executable `twixt`.
-
-### To Run the Game:
-```
+### Play
+```bash
 ./twixt
 ```
+*(Tip: Maximize or enlarge your terminal window for optimal board visibility).*
 
-(Adjust your terminal size to view the full board.)
-
-### To Clean Build Files:
-```
+### Clean
+```bash
 make clean
 ```
 
 ---
 
-## What It Does
+## 📂 Source Code Layout
 
--What It Does
--Runs a fully interactive terminal-based TWIXT game.
--Players take alternating turns placing Yellow (O) and Blue (X) pegs.
--Accepts coordinate-based input (e.g., A5, C7).
--NEW FEATURE: Players can exit the game at any time by typing -1.
--Automatically forms valid knight-move links between pegs of the same color.
--Prevents illegal cross-links using line-intersection checks.
--Displays messages when new links are successfully formed.
--Continuously updates and redraws the board with colored output.
--Detects when the board has no valid moves left and declares a draw.
--Checks win conditions on every move:
-  -Yellow wins by connecting top to bottom.
-  -Blue wins by connecting left to right.
--Ends the game immediately when a winner is found or when the player exits with -1.
-
----
-
-# End of README
+* **`main.c`**: Game entrypoint, player turn loop, game over checks, and coordinate parsing.
+* **`board.c` / `board.h`**: Board state matrix, coordinate transformations, and ANSI terminal rendering.
+* **`play.c` / `play.h`**: Move validation, knight-move vector calculations, and line-crossing intersection tests.
+* **`game.c` / `game.h`**: Win condition path search (graph traversal between opposing borders).
+* **`Makefile`**: Standard build and clean recipes.
